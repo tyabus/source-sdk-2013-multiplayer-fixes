@@ -1,4 +1,4 @@
-# SDK-2013-Multiplayer-AI-Fixes (outdated)
+# SDK-2013-Multiplayer-AI-Fixes
 
 Updated version of the AI Fixes for the Multiplayer Branch of the Source SDK. I'm only doing this since most repos I've found on Github are either filled with extra code. or it's just outdated. I'm going to eventually update this repo once I have free time. (ALTHOUGH IT DOES WORK JUST MINOR BUGS)
 
