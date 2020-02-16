@@ -14,7 +14,7 @@
 #include "basecombatweapon_shared.h"
 #include "hl2mp_weapon_parse.h"
 #ifndef CLIENT_DLL
-	#include "AI_BaseNPC.h"
+	#include "ai_basenpc.h"
 #endif
 
 #if defined( CLIENT_DLL )
