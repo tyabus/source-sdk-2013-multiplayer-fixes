@@ -617,7 +617,6 @@ $Project
 		$File	"$SRCDIR\game\shared\tempentity.h"
 		$File	"TemplateEntities.cpp"
 		$File	"TemplateEntities.h"
-		$File	"tempmonster.cpp"
 		$File	"tesla.cpp"
 		$File	"$SRCDIR\game\shared\test_ehandle.cpp"
 		$File	"test_proxytoggle.cpp"

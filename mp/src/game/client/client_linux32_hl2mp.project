@@ -332,7 +332,6 @@
       <File Name="EffectsClient.cpp"/>
       <File Name="entityoriginmaterialproxy.cpp"/>
       <File Name="entity_client_tools.cpp"/>
-      <File Name="episodic/c_vort_charge_token.cpp"/>
       <File Name="flashlighteffect.cpp"/>
       <File Name="functionproxy.cpp"/>
       <File Name="fx.cpp"/>
