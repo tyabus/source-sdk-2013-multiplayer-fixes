@@ -542,7 +542,6 @@
       <File Name="team_spawnpoint.cpp"/>
       <File Name="team_train_watcher.cpp"/>
       <File Name="TemplateEntities.cpp"/>
-      <File Name="tempmonster.cpp"/>
       <File Name="tesla.cpp"/>
       <File Name="testfunctions.cpp"/>
       <File Name="testtraceline.cpp"/>
