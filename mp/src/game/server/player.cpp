@@ -1754,7 +1754,7 @@ void CBasePlayer::Event_Dying( const CTakeDamageInfo& info )
 
 	angles.x = 0;
 	angles.z = 0;
-	
+
 	SetLocalAngles( angles );
 
 	SetThink(&CBasePlayer::PlayerDeathThink);
@@ -2125,6 +2125,8 @@ void CBasePlayer::PlayerDeathThink(void)
 	}
 	
 	StopAnimation();
+
+	Extinguish();
 
 	IncrementInterpolationFrame();
 	m_flPlaybackRate = 0.0;
