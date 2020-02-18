@@ -33,10 +33,7 @@
 	#include "voice_gamemgr.h"
 	#include "hl2mp_gameinterface.h"
 	#include "hl2mp_cvars.h"
-
-#ifdef DEBUG	
 	#include "hl2mp_bot_temp.h"
-#endif
 
 extern void respawn(CBaseEntity *pEdict, bool fCopyCorpse);
 
@@ -971,22 +968,20 @@ CAmmoDef *GetAmmoDef()
 		FCVAR_ARCHIVE | FCVAR_USERINFO,
 		"Automatically switch to picked up weapons (if more powerful)" );
 
-#else
-
-#ifdef DEBUG
+#endif
 
 	// Handler for the "bot" command.
 	void Bot_f()
-	{		
+	{
 		// Look at -count.
 		int count = 1;
 		count = clamp( count, 1, 16 );
 
 		int iTeam = TEAM_COMBINE;
-				
+
 		// Look at -frozen.
 		bool bFrozen = false;
-			
+
 		// Ok, spawn all the bots.
 		while ( --count >= 0 )
 		{
@@ -996,8 +991,6 @@ CAmmoDef *GetAmmoDef()
 
 
 	ConCommand cc_Bot( "bot", Bot_f, "Add a bot.", FCVAR_CHEAT );
-
-#endif
 
 	bool CHL2MPRules::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBaseCombatWeapon *pWeapon )
 	{		
@@ -1013,8 +1006,6 @@ CAmmoDef *GetAmmoDef()
 
 		return BaseClass::FShouldSwitchWeapon( pPlayer, pWeapon );
 	}
-
-#endif
 
 #ifndef CLIENT_DLL
 

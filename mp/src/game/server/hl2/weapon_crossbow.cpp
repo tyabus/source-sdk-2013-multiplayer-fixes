@@ -205,7 +205,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 			return;
 	}
 
-	if ( pOther->m_takedamage != DAMAGE_NO )
+	if ( pOther->m_takedamage != DAMAGE_NO && pOwner->GetTeamNumber() != TEAM_SPECTATOR )
 	{
 		trace_t	tr, tr2;
 		tr = BaseClass::GetTouchTrace();
@@ -399,6 +399,15 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 void CCrossbowBolt::BubbleThink( void )
 {
+	CBasePlayer *pPlayer = ToBasePlayer(GetOwnerEntity());
+        if( pPlayer->GetTeamNumber() == TEAM_SPECTATOR )
+        {
+                pPlayer->DeathNotice( this );
+                SetOwnerEntity( NULL );
+                UTIL_Remove( this );
+                return;
+        }
+
 	QAngle angNewAngles;
 
 	VectorAngles( GetAbsVelocity(), angNewAngles );
