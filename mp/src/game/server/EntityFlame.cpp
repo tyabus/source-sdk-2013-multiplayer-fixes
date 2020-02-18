@@ -118,6 +118,9 @@ CEntityFlame *CEntityFlame::Create( CBaseEntity *pTarget, bool useHitboxes )
 {
 	CEntityFlame *pFlame = (CEntityFlame *) CreateEntityByName( "entityflame" );
 
+	if ( pTarget->IsPlayer() && !pTarget->IsAlive() )
+		return NULL;
+
 	if ( pFlame == NULL )
 		return NULL;
 
@@ -240,7 +243,7 @@ void CEntityFlame::FlameThink( void )
 			SetRenderColorA( 0 );
 			return;
 		}
-	
+
 		CAI_BaseNPC *pNPC = m_hEntAttached->MyNPCPointer();
 		if ( pNPC && !pNPC->IsAlive() )
 		{
@@ -248,6 +251,22 @@ void CEntityFlame::FlameThink( void )
 			// Notify the NPC that it's no longer burning!
 			pNPC->Extinguish();
 			return;
+		}
+
+		CBaseCombatCharacter *pAttachedCC = m_hEntAttached->MyCombatCharacterPointer();
+		if( m_hEntAttached->IsPlayer() && m_hEntAttached->GetTeamNumber() == TEAM_SPECTATOR )
+		{
+                        UTIL_Remove( this );
+			pAttachedCC->Extinguish();
+                        return;
+		}
+
+		if( m_hEntAttached->IsPlayer() && !m_hEntAttached->IsAlive() )
+		{
+                        UTIL_Remove( this );
+                        pAttachedCC->Extinguish();
+                        return;
+
 		}
 
 		if( m_hEntAttached->GetWaterLevel() >= 1 )
@@ -267,9 +286,14 @@ void CEntityFlame::FlameThink( void )
 
 			UTIL_Bubbles( mins, maxs, 12 );
 
-			if ( m_flLifetime > 3 )
+			if ( m_flLifetime > 4 )
 			{
-				m_flLifetime -= 3;
+				m_flLifetime -= 4;
+			}
+
+			if ( m_flLifetime > 60 )
+			{
+				m_flLifetime = 60; // ugly hack
 			}
 		}
 	}
