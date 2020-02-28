@@ -205,7 +205,7 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 			return;
 	}
 
-	if ( pOther->m_takedamage != DAMAGE_NO && pOwner->GetTeamNumber() != TEAM_SPECTATOR )
+	if ( pOther->m_takedamage != DAMAGE_NO )
 	{
 		trace_t	tr, tr2;
 		tr = BaseClass::GetTouchTrace();
@@ -386,12 +386,6 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 			UTIL_Remove( this );
 		}
 	}
-
-	if ( g_pGameRules->IsMultiplayer() )
-	{
-//		SetThink( &CCrossbowBolt::ExplodeThink );
-//		SetNextThink( gpGlobals->curtime + 0.1f );
-	}
 }
 
 //-----------------------------------------------------------------------------
@@ -399,8 +393,8 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 void CCrossbowBolt::BubbleThink( void )
 {
-	CBasePlayer *pPlayer = ToBasePlayer(GetOwnerEntity());
-        if( pPlayer->GetTeamNumber() == TEAM_SPECTATOR )
+	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
+        if( pOwner->GetTeamNumber() == TEAM_SPECTATOR )
         {
                 pPlayer->DeathNotice( this );
                 SetOwnerEntity( NULL );
@@ -647,6 +641,9 @@ void CWeaponCrossbow::FireBolt( void )
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
 	
 	if ( pOwner == NULL )
+		return;
+
+	if ( pOwner->GetTeamNumber() == TEAM_SPECTATOR )
 		return;
 
 	pOwner->RumbleEffect( RUMBLE_357, 0, RUMBLE_FLAG_RESTART );

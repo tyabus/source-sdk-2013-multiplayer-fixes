@@ -200,7 +200,7 @@ void CHL2MP_Player::GiveDefaultItems( void )
 {
 	EquipSuit();
 
-	if( mp_skipdefaults.GetBool() )
+	if( !mp_skipdefaults.GetBool() )
 	{
 		CBasePlayer::GiveAmmo( 255,	"Pistol");
 		CBasePlayer::GiveAmmo( 45,	"SMG1");
@@ -265,23 +265,34 @@ void CHL2MP_Player::PickDefaultSpawnTeam( void )
 			CTeam *pCombine = g_Teams[TEAM_COMBINE];
 			CTeam *pRebels = g_Teams[TEAM_REBELS];
 
-			if ( pCombine == NULL || pRebels == NULL )
+			if ( defaultteam.GetBool() )
 			{
-				ChangeTeam( random->RandomInt( TEAM_COMBINE, TEAM_REBELS ) );
+				if ( pCombine == NULL || pRebels == NULL )
+				{
+					ChangeTeam( defaultteam.GetInt() );
+				}
 			}
 			else
+                        {
+                        	ChangeTeam( random->RandomInt( TEAM_COMBINE, TEAM_REBELS ) );
+                        }
+
+			if ( !defaultteam.GetBool() )
 			{
-				if ( pCombine->GetNumPlayers() > pRebels->GetNumPlayers() )
+				if ( pCombine != NULL || pRebels != NULL )
 				{
-					ChangeTeam( TEAM_REBELS );
-				}
-				else if ( pCombine->GetNumPlayers() < pRebels->GetNumPlayers() )
-				{
-					ChangeTeam( TEAM_COMBINE );
-				}
-				else
-				{
-					ChangeTeam( random->RandomInt( TEAM_COMBINE, TEAM_REBELS ) );
+					if ( pCombine->GetNumPlayers() > pRebels->GetNumPlayers() )
+					{
+						ChangeTeam( TEAM_REBELS );
+					}
+					else if ( pCombine->GetNumPlayers() < pRebels->GetNumPlayers() )
+					{
+						ChangeTeam( TEAM_COMBINE );
+					}
+					else
+					{
+						ChangeTeam( random->RandomInt( TEAM_COMBINE, TEAM_REBELS ) );
+					}
 				}
 			}
 		}
@@ -903,15 +914,6 @@ bool CHL2MP_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 
 void CHL2MP_Player::ChangeTeam( int iTeam )
 {
-/*	if ( GetNextTeamChangeTime() >= gpGlobals->curtime )
-	{
-		char szReturnString[128];
-		Q_snprintf( szReturnString, sizeof( szReturnString ), "Please wait %d more seconds before trying to switch teams again.\n", (int)(GetNextTeamChangeTime() - gpGlobals->curtime) );
-
-		ClientPrint( this, HUD_PRINTTALK, szReturnString );
-		return;
-	}*/
-
 	bool bKill = false;
 
 	if ( HL2MPRules()->IsTeamplay() != true && iTeam != TEAM_SPECTATOR )
@@ -956,6 +958,16 @@ void CHL2MP_Player::ChangeTeam( int iTeam )
 
 bool CHL2MP_Player::HandleCommand_JoinTeam( int team )
 {
+	if( GetNextTeamChangeTime() >= gpGlobals->curtime )
+	{
+                char szReturnString[128];
+                Q_snprintf( szReturnString, sizeof( szReturnString ), "Please wait %d more seconds before trying to switch teams again.\n", (int)(GetNextTeamChangeTime() - gpGlobals->curtime) );
+
+                ClientPrint( this, HUD_PRINTTALK, szReturnString );
+
+		return false;
+	}
+
 	if ( !GetGlobalTeam( team ) || team == 0 )
 	{
 		Warning( "HandleCommand_JoinTeam( %d ) - invalid team index.\n", team );

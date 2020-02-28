@@ -261,8 +261,6 @@ void CMissile::AccelerateThink( void )
 	// !!!UNDONE - make this work exactly the same as HL1 RPG, lest we have looping sound bugs again!
 	EmitSound( "Missile.Accelerate" );
 
-	// SetEffects( EF_LIGHT );
-
 	AngleVectors( GetLocalAngles(), &vecForward );
 	SetAbsVelocity( vecForward * RPG_SPEED );
 
@@ -278,8 +276,7 @@ void CMissile::AccelerateThink( void )
 //---------------------------------------------------------
 void CMissile::AugerThink( void )
 {
-        CBasePlayer *pPlayer = ToBasePlayer(GetOwnerEntity());
-        if( pPlayer->GetTeamNumber() == TEAM_SPECTATOR )
+        if( m_hOwner->GetTeamNumber() == TEAM_SPECTATOR )
         {
                 pPlayer->DeathNotice( this );
                 SetOwnerEntity( NULL );
@@ -349,12 +346,9 @@ void CMissile::ShotDown( void )
 //-----------------------------------------------------------------------------
 void CMissile::DoExplosion( void )
 {
-	if( pOther->IsPlayer() && !pOther->GetTeamNumber() == TEAM_SPECTATOR )
-	{
 		// Explode
 		ExplosionCreate( GetAbsOrigin(), GetAbsAngles(), GetOwnerEntity(), GetDamage(), CMissile::EXPLOSION_RADIUS, 
 			SF_ENVEXPLOSION_NOSPARKS | SF_ENVEXPLOSION_NODLIGHTS | SF_ENVEXPLOSION_NOSMOKE, 0.0f, this);
-	}
 }
 
 
@@ -374,7 +368,7 @@ void CMissile::Explode( void )
 
 	m_takedamage = DAMAGE_NO;
 	SetSolid( SOLID_NONE );
-	if( tr.fraction == 1.0 || !(tr.surface.flags & SURF_SKY) )
+	if( tr.fraction == 1.0 || !(tr.surface.flags & SURF_SKY) || m_hOwner != NULL && m_hOwner->GetTeamNumber() != TEAM_SPECTATOR )
 	{
 		DoExplosion();
 	}
@@ -402,7 +396,13 @@ void CMissile::Explode( void )
 void CMissile::MissileTouch( CBaseEntity *pOther )
 {
 	Assert( pOther );
-	
+
+        if( m_hOwner->GetTeamNumber() == TEAM_SPECTATOR )
+        {
+                UTIL_Remove( this );
+                return;
+        }
+
 	// Don't touch triggers (but DO hit weapons)
 	if ( pOther->IsSolidFlagSet(FSOLID_TRIGGER|FSOLID_VOLUME_CONTENTS) && pOther->GetCollisionGroup() != COLLISION_GROUP_WEAPON )
 	{
@@ -411,15 +411,7 @@ void CMissile::MissileTouch( CBaseEntity *pOther )
 			return;
 	}
 
-        if( pOther->IsPlayer() && !pOther->GetTeamNumber() == TEAM_SPECTATOR )
-	{
-		Explode();
-	}
-	else
-	{
-		UTIL_Remove( this );
-		return;
-	}
+	Explode();
 }
 
 //-----------------------------------------------------------------------------
