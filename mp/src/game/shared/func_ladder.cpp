@@ -392,8 +392,11 @@ void CFuncLadder::InputDisable( inputdata_t &inputdata )
 void CFuncLadder::PlayerGotOn( CBasePlayer *pPlayer )
 {
 #if !defined( CLIENT_DLL )
-	m_OnPlayerGotOnLadder.FireOutput(this, pPlayer);
-	pPlayer->EmitSound( "Ladder.StepRight" );
+	if( pPlayer->IsAlive() )
+	{
+		m_OnPlayerGotOnLadder.FireOutput(this, pPlayer);
+		pPlayer->EmitSound( "Ladder.StepRight" );
+	}
 #endif
 }
 
