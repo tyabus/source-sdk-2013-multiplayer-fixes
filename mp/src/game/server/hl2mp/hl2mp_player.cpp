@@ -958,6 +958,14 @@ void CHL2MP_Player::ChangeTeam( int iTeam )
 
 bool CHL2MP_Player::HandleCommand_JoinTeam( int team )
 {
+	if( team == TEAM_SPECTATOR && IsHLTV() )
+	{
+		ChangeTeam( TEAM_SPECTATOR );
+		ResetDeathCount();
+		ResetFragCount();
+		return true;
+	}
+
 	if( GetNextTeamChangeTime() >= gpGlobals->curtime )
 	{
                 char szReturnString[128];
