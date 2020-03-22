@@ -393,11 +393,8 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 void CCrossbowBolt::BubbleThink( void )
 {
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-        if( pOwner->GetTeamNumber() == TEAM_SPECTATOR )
+        if( m_hOwner && m_hOwner->GetTeamNumber() == TEAM_SPECTATOR )
         {
-                pPlayer->DeathNotice( this );
-                SetOwnerEntity( NULL );
                 UTIL_Remove( this );
                 return;
         }

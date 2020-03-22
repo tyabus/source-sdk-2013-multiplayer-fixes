@@ -276,10 +276,14 @@ void CMissile::AccelerateThink( void )
 //---------------------------------------------------------
 void CMissile::AugerThink( void )
 {
-        if( m_hOwner->GetTeamNumber() == TEAM_SPECTATOR )
+	if( !m_hOwner )
+	{
+		UTIL_Remove( this );
+                return;
+	}
+
+        if( m_hOwner && m_hOwner->GetTeamNumber() == TEAM_SPECTATOR )
         {
-                pPlayer->DeathNotice( this );
-                SetOwnerEntity( NULL );
                 UTIL_Remove( this );
                 return;
         }
@@ -396,12 +400,6 @@ void CMissile::Explode( void )
 void CMissile::MissileTouch( CBaseEntity *pOther )
 {
 	Assert( pOther );
-
-        if( m_hOwner->GetTeamNumber() == TEAM_SPECTATOR )
-        {
-                UTIL_Remove( this );
-                return;
-        }
 
 	// Don't touch triggers (but DO hit weapons)
 	if ( pOther->IsSolidFlagSet(FSOLID_TRIGGER|FSOLID_VOLUME_CONTENTS) && pOther->GetCollisionGroup() != COLLISION_GROUP_WEAPON )

@@ -126,15 +126,10 @@ void CTripmineGrenade::PowerupThink( void  )
 
 	SetNextThink( gpGlobals->curtime + 0.1f );
 
-        CBasePlayer *pPlayer = ToBasePlayer(m_hOwner);
-        if( pPlayer && pPlayer->GetTeamNumber() == TEAM_SPECTATOR )
+	CBasePlayer *pPlayer = ToBasePlayer(m_hOwner);
+	if( pPlayer && pPlayer->GetTeamNumber() == TEAM_SPECTATOR )
 	{
-		m_takedamage            = DAMAGE_NO;
-
-        	SetThink( &CTripmineGrenade::DelayDeathThink );
-        	SetNextThink( gpGlobals->curtime + 0.25 );
-
-        	EmitSound( "TripmineGrenade.StopSound" );
+		SetThink( &CTripmineGrenade::DelayDeathThink );
 	}
 }
 
