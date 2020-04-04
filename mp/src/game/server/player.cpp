@@ -1576,10 +1576,10 @@ bool CBasePlayer::IsDead() const
 }
 
 static float DamageForce( const Vector &size, float damage )
-{ 
+{
 	float force = damage * ((32 * 32 * 72.0) / (size.x * size.y * size.z)) * 5;
-	
-	if ( force > 1000.0) 
+
+	if ( force > 1000.0 )
 	{
 		force = 1000.0;
 	}

@@ -822,6 +822,9 @@ void CItem_AmmoCrate::Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TY
 	if ( pPlayer == NULL )
 		return;
 
+	if ( m_flCloseTime > gpGlobals->curtime )
+		return;
+
 	m_OnUsed.FireOutput( pActivator, this );
 
 	int iSequence = LookupSequence( "Open" );

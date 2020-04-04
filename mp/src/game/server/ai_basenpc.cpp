@@ -8450,10 +8450,13 @@ void CAI_BaseNPC::HandleAnimEvent( animevent_t *pEvent )
 				// Cache off the weapon.
 				CBaseCombatWeapon *pWeapon = GetActiveWeapon(); 
 
-				Assert( pWeapon != NULL	); 
+				Assert( pWeapon != NULL	);
 
- 				GetActiveWeapon()->Holster();
-				SetActiveWeapon( NULL );
+				if( GetActiveWeapon() != NULL )
+				{
+ 					GetActiveWeapon()->Holster();
+					SetActiveWeapon( NULL );
+				}
 
 				//Force the NPC to recalculate it's arrival activity since it'll most likely be wrong now that we don't have a weapon out.
 				GetNavigator()->SetArrivalSequence( ACT_INVALID );
