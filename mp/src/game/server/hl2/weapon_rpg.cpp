@@ -282,12 +282,6 @@ void CMissile::AugerThink( void )
                 return;
 	}
 
-        if( m_hOwner && m_hOwner->GetTeamNumber() == TEAM_SPECTATOR )
-        {
-                UTIL_Remove( this );
-                return;
-        }
-
 	// If we've augered long enough, then just explode
 	if ( m_flAugerTime < gpGlobals->curtime )
 	{
@@ -372,7 +366,7 @@ void CMissile::Explode( void )
 
 	m_takedamage = DAMAGE_NO;
 	SetSolid( SOLID_NONE );
-	if( tr.fraction == 1.0 || !(tr.surface.flags & SURF_SKY) || m_hOwner != NULL && m_hOwner->GetTeamNumber() != TEAM_SPECTATOR )
+	if( tr.fraction == 1.0 || !(tr.surface.flags & SURF_SKY) || m_hOwner != NULL )
 	{
 		DoExplosion();
 	}

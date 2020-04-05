@@ -205,6 +205,15 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 			return;
 	}
 
+	if( pOther->classname == "npc_satchel" )
+	{
+		        CTakeDamageInfo dmgInfo( this, GetOwnerEntity(), sk_plr_dmg_crossbow.GetFloat(), DMG_BULLET | DMG_NEVERGIB );
+                        CalculateMeleeDamageForce( &dmgInfo, vecNormalizedVel, tr.endpos, 0.7f );
+                        dmgInfo.SetDamagePosition( tr.endpos );
+                        pOther->DispatchTraceAttack( dmgInfo, vecNormalizedVel, &tr );
+
+	}
+
 	if ( pOther->m_takedamage != DAMAGE_NO )
 	{
 		trace_t	tr, tr2;
@@ -393,12 +402,6 @@ void CCrossbowBolt::BoltTouch( CBaseEntity *pOther )
 //-----------------------------------------------------------------------------
 void CCrossbowBolt::BubbleThink( void )
 {
-        if( m_hOwner && m_hOwner->GetTeamNumber() == TEAM_SPECTATOR )
-        {
-                UTIL_Remove( this );
-                return;
-        }
-
 	QAngle angNewAngles;
 
 	VectorAngles( GetAbsVelocity(), angNewAngles );
@@ -636,11 +639,8 @@ void CWeaponCrossbow::FireBolt( void )
 	}
 
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-	
-	if ( pOwner == NULL )
-		return;
 
-	if ( pOwner->GetTeamNumber() == TEAM_SPECTATOR )
+	if ( pOwner == NULL )
 		return;
 
 	pOwner->RumbleEffect( RUMBLE_357, 0, RUMBLE_FLAG_RESTART );
