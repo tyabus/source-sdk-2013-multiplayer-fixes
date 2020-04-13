@@ -6124,7 +6124,7 @@ static ConCommand ch_createairboat( "ch_createairboat", CC_CH_CreateAirboat, "Sp
 void CBasePlayer::CheatImpulseCommands( int iImpulse )
 {
 #if !defined( HLDEMO_BUILD )
-	if ( !sv_cheats->GetBool() )
+	if ( !sv_cheats->GetBool() || !UTIL_IsCommandIssuedByServerAdmin() )
 	{
 		return;
 	}
