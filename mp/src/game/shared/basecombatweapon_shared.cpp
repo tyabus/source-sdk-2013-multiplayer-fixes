@@ -1710,7 +1710,7 @@ void CBaseCombatWeapon::ItemPostFrame( void )
 		{
 			// This weapon doesn't fire underwater
 			WeaponSound(EMPTY);
-			m_flNextPrimaryAttack = gpGlobals->curtime + 0.2;
+			m_flNextPrimaryAttack = gpGlobals->curtime + 0.25;
 			return;
 		}
 		else
@@ -1753,7 +1753,7 @@ void CBaseCombatWeapon::ItemPostFrame( void )
 		{
 			// This weapon doesn't fire underwater
 			WeaponSound(EMPTY);
-			m_flNextPrimaryAttack = gpGlobals->curtime + 0.2;
+			m_flNextPrimaryAttack = gpGlobals->curtime + 0.25;
 			return;
 		}
 		else

@@ -48,8 +48,6 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-extern int giPrecacheGrunt;
-
 // For not just using one big ai net
 extern CBaseEntity*	FindPickerEntity( CBasePlayer* pPlayer );
 
@@ -229,7 +227,7 @@ void Host_Say( edict_t *pEdict, const CCommand &args, bool teamonly )
 	if ( g_pGameRules )
 	{
 		pszFormat = g_pGameRules->GetChatFormat( teamonly, pPlayer );
-		pszPrefix = g_pGameRules->GetChatPrefix( teamonly, pPlayer );	
+		pszPrefix = g_pGameRules->GetChatPrefix( teamonly, pPlayer );
 		pszLocation = g_pGameRules->GetChatLocation( teamonly, pPlayer );
 	}
 

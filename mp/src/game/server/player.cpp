@@ -5900,7 +5900,7 @@ ImpulseCommands
 void CBasePlayer::ImpulseCommands( )
 {
 	trace_t	tr;
-		
+
 	int iImpulse = (int)m_nImpulse;
 	switch (iImpulse)
 	{
@@ -5922,7 +5922,7 @@ void CBasePlayer::ImpulseCommands( )
 			CBaseCombatWeapon *pWeapon;
 
 			pWeapon = GetActiveWeapon();
-			
+
 			if( pWeapon->IsEffectActive( EF_NODRAW ) )
 			{
 				pWeapon->Deploy();
@@ -5935,7 +5935,7 @@ void CBasePlayer::ImpulseCommands( )
 		break;
 
 	case	201:// paint decal
-		
+
 		if ( gpGlobals->curtime < m_flNextDecalTime )
 		{
 			// too early!
@@ -5951,29 +5951,11 @@ void CBasePlayer::ImpulseCommands( )
 		}
 
 		if ( tr.fraction != 1.0 )
-		{// line hit something, so paint a decal
+		{
+			// line hit something, so paint a decal
 			m_flNextDecalTime = gpGlobals->curtime + decalfrequency.GetFloat();
 			CSprayCan *pCan = CREATE_UNSAVED_ENTITY( CSprayCan, "spraycan" );
 			pCan->Spawn( this );
-
-#ifdef CSTRIKE_DLL
-			//=============================================================================
-			// HPE_BEGIN:
-			// [pfreese] Fire off a game event - the Counter-Strike stats manager listens
-			// to these achievements for one of the CS achievements.
-			//=============================================================================
-			
-			IGameEvent * event = gameeventmanager->CreateEvent( "player_decal" );
-			if ( event )
-			{
-				event->SetInt("userid", GetUserID() );
-				gameeventmanager->FireEvent( event );
-			}
-
-			//=============================================================================
-			// HPE_END
-			//=============================================================================
-#endif			
 		}
 
 		break;
@@ -5985,7 +5967,7 @@ void CBasePlayer::ImpulseCommands( )
 			break;
 
 		}
-		
+
 		EntityMessageBegin( this );
 			WRITE_BYTE( PLAY_PLAYER_JINGLE );
 		MessageEnd();
@@ -5998,7 +5980,7 @@ void CBasePlayer::ImpulseCommands( )
 		CheatImpulseCommands( iImpulse );
 		break;
 	}
-	
+
 	m_nImpulse = 0;
 }
 
@@ -6123,8 +6105,7 @@ static ConCommand ch_createairboat( "ch_createairboat", CC_CH_CreateAirboat, "Sp
 //=========================================================
 void CBasePlayer::CheatImpulseCommands( int iImpulse )
 {
-#if !defined( HLDEMO_BUILD )
-	if ( !sv_cheats->GetBool() || !UTIL_IsCommandIssuedByServerAdmin() )
+	if ( !sv_cheats->GetBool() && !UTIL_IsCommandIssuedByServerAdmin() )
 	{
 		return;
 	}
@@ -6134,21 +6115,6 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 
 	switch ( iImpulse )
 	{
-	case 76:
-		{
-			if (!giPrecacheGrunt)
-			{
-				giPrecacheGrunt = 1;
-				Msg( "You must now restart to use Grunt-o-matic.\n");
-			}
-			else
-			{
-				Vector forward = UTIL_YawToVector( EyeAngles().y );
-				Create("NPC_human_grunt", GetLocalOrigin() + forward * 128, GetLocalAngles());
-			}
-			break;
-		}
-
 	case 81:
 
 		GiveNamedItem( "weapon_cubemap" );
@@ -6182,7 +6148,7 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		GiveAmmo( 16,	"XBowBolt" );
 #ifdef HL2_EPISODIC
 		GiveAmmo( 5,	"Hopwire" );
-#endif		
+#endif
 		GiveNamedItem( "weapon_smg1" );
 		GiveNamedItem( "weapon_frag" );
 		GiveNamedItem( "weapon_crowbar" );
@@ -6194,14 +6160,12 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		GiveNamedItem( "weapon_rpg" );
 		GiveNamedItem( "weapon_357" );
 		GiveNamedItem( "weapon_crossbow" );
-#ifdef HL2_EPISODIC
-		// GiveNamedItem( "weapon_magnade" );
-#endif
+
 		if ( GetHealth() < 100 )
 		{
 			TakeHealth( 25, DMG_GENERIC );
 		}
-		
+
 		gEvilImpulse101		= false;
 
 		break;
@@ -6228,7 +6192,7 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		if ( pEntity )
 		{
 			Msg( "Classname: %s", pEntity->GetClassname() );
-			
+
 			if ( pEntity->GetEntityName() != NULL_STRING )
 			{
 				Msg( " - Name: %s\n", STRING( pEntity->GetEntityName() ) );
@@ -6321,12 +6285,9 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		if ( pEntity )
 		{
 			UTIL_Remove( pEntity );
-//			if ( pEntity->m_takedamage )
-//				pEntity->SetThink(SUB_Remove);
 		}
 		break;
 	}
-#endif	// HLDEMO_BUILD
 }
 
 

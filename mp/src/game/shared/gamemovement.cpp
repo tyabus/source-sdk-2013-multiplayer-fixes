@@ -2417,10 +2417,10 @@ bool CGameMovement::CheckJumpButton( void )
 
 
 	// In the air now.
-    SetGroundEntity( NULL );
-	
+    	SetGroundEntity( NULL );
+
 	player->PlayStepSound( (Vector &)mv->GetAbsOrigin(), player->m_pSurfaceData, 1.0, true );
-	
+
 	MoveHelper()->PlayerSetAnimation( PLAYER_JUMP );
 
 	float flGroundFactor = 1.0f;
