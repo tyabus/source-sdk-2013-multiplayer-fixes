@@ -5905,37 +5905,32 @@ void CBasePlayer::ImpulseCommands( )
 	switch (iImpulse)
 	{
 	case 100:
-        // temporary flashlight for level designers
-        if ( FlashlightIsOn() )
-		{
-			FlashlightTurnOff();
-		}
-        else 
-		{
-			FlashlightTurnOn();
-		}
+        	// temporary flashlight for level designers
+        	if ( FlashlightIsOn() )
+			{
+				FlashlightTurnOff();
+			}
+        	else
+			{
+				FlashlightTurnOn();
+			}
 		break;
 
 	case 200:
-		if ( sv_cheats->GetBool() )
+		// holster weapon
+		CBaseCombatWeapon *pWeapon = GetActiveWeapon();
+		if( pWeapon && pWeapon->IsEffectActive( EF_NODRAW ) )
 		{
-			CBaseCombatWeapon *pWeapon;
-
-			pWeapon = GetActiveWeapon();
-
-			if( pWeapon->IsEffectActive( EF_NODRAW ) )
-			{
-				pWeapon->Deploy();
-			}
-			else
-			{
-				pWeapon->Holster();
-			}
+			pWeapon->Deploy();
+		}
+		else
+		{
+			pWeapon->Holster();
 		}
 		break;
 
-	case	201:// paint decal
-
+	case 201:
+		// paint decal
 		if ( gpGlobals->curtime < m_flNextDecalTime )
 		{
 			// too early!
@@ -5960,7 +5955,8 @@ void CBasePlayer::ImpulseCommands( )
 
 		break;
 
-	case	202:// player jungle sound 
+	case 202:
+		// player jungle sound
 		if ( gpGlobals->curtime < m_flNextDecalTime )
 		{
 			// too early!
@@ -6105,7 +6101,7 @@ static ConCommand ch_createairboat( "ch_createairboat", CC_CH_CreateAirboat, "Sp
 //=========================================================
 void CBasePlayer::CheatImpulseCommands( int iImpulse )
 {
-	if ( !sv_cheats->GetBool() && !UTIL_IsCommandIssuedByServerAdmin() )
+	if ( !sv_cheats->GetBool() || !UTIL_IsCommandIssuedByServerAdmin() )
 	{
 		return;
 	}
