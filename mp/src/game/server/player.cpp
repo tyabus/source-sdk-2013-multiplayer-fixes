@@ -5919,13 +5919,16 @@ void CBasePlayer::ImpulseCommands( )
 	case 200:
 		// holster weapon
 		CBaseCombatWeapon *pWeapon = GetActiveWeapon();
-		if( pWeapon && pWeapon->IsEffectActive( EF_NODRAW ) )
+		if( pWeapon )
 		{
-			pWeapon->Deploy();
-		}
-		else
-		{
-			pWeapon->Holster();
+			if( pWeapon->IsEffectActive( EF_NODRAW ) )
+			{
+				pWeapon->Deploy();
+			}
+			else
+			{
+				pWeapon->Holster();
+			}
 		}
 		break;
 
