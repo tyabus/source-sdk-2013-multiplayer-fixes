@@ -40,3 +40,11 @@ ConVar mp_allowpickup(
                                                         FCVAR_GAMEDLL,
                                                         "If non-zero, game will allow pickup items" );
 
+
+// Enable suit notifications in multiplayer
+ConVar mp_suitvoice(
+                                                        "mp_suitvoice",
+                                                        "0",
+                                                        FCVAR_GAMEDLL,
+                                                        "If non-zero, game will enable suit notifications" );
+

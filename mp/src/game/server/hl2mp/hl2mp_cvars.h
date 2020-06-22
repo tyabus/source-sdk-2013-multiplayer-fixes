@@ -18,5 +18,6 @@ extern ConVar mp_readyrestart;
 extern ConVar mp_ready_signal;
 extern ConVar mp_skipdefaults;
 extern ConVar mp_allowpickup;
+extern ConVar mp_suitvoice;
 
 #endif //HL2MP_CVARS_H
