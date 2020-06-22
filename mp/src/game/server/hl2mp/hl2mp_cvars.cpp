@@ -31,3 +31,12 @@ ConVar mp_skipdefaults(
                                                         "0",
                                                         FCVAR_GAMEDLL,
                                                         "If non-zero, game will not give player default weapons and ammo" );
+
+
+// Allow pickup items with +use
+ConVar mp_allowpickup(
+                                                        "mp_allowpickup",
+                                                        "1",
+                                                        FCVAR_GAMEDLL,
+                                                        "If non-zero, game will allow pickup items" );
+

@@ -352,7 +352,10 @@ void CHL2MP_Player::Spawn(void)
 
 void CHL2MP_Player::PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize )
 {
-	BaseClass::PickupObject( pObject, bLimitMassAndSize ); // Use PickupObject from base class
+	if( mp_allowpickup.GetBool() )
+	{
+		BaseClass::PickupObject( pObject, bLimitMassAndSize ); // Use PickupObject from base class
+	}
 }
 
 bool CHL2MP_Player::ValidatePlayerModel( const char *pModel )
