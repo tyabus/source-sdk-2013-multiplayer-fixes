@@ -4273,17 +4273,15 @@ void CBasePlayer::SetSuitUpdate(const char *name, int fgroup, int iNoRepeatTime)
 	int i;
 	int isentence;
 	int iempty = -1;
-	
-	
+
 	// Ignore suit updates if no suit
 	if ( !IsSuitEquipped() )
 		return;
 
-	if ( g_pGameRules->IsMultiplayer() )
-	{
-		// due to static channel design, etc. We don't play HEV sounds in multiplayer right now.
-		return;
-	}
+	if ( !mp_suitvoice.GetBool() )
+        {
+                return;
+        }
 
 	// if name == NULL, then clear out the queue
 
