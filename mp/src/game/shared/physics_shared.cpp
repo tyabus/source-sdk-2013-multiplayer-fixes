@@ -621,7 +621,7 @@ IPhysicsObject *PhysCreateWorld_Shared( CBaseEntity *pWorld, vcollide_t *pWorldC
 			solid.params.enableCollisions = true;
 			solid.params.pGameData = static_cast<void *>(pWorld);
 			solid.params.pName = "world";
-			int surfaceData = physprops->GetSurfaceIndex( "default" );
+			surfaceData = physprops->GetSurfaceIndex( "default" );
 
 			// already created world above
 			if ( solid.index == 0 )
