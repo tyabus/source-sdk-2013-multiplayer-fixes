@@ -310,14 +310,13 @@ void CHL2MP_Player::Spawn(void)
 	PickDefaultSpawnTeam();
 
 	BaseClass::Spawn();
-	
+
 	if ( !IsObserver() )
 	{
 		pl.deadflag = false;
+		RemoveEffects( EF_NODRAW );
 		RemoveSolidFlags( FSOLID_NOT_SOLID );
 
-		RemoveEffects( EF_NODRAW );
-		
 		GiveDefaultItems();
 	}
 
@@ -327,7 +326,7 @@ void CHL2MP_Player::Spawn(void)
 	m_nRenderFX = kRenderNormal;
 
 	m_Local.m_iHideHUD = 0;
-	
+
 	AddFlag(FL_ONGROUND); // set the player on the ground at the start of the round.
 
 	m_impactEnergyScale = HL2MPPLAYER_PHYSDAMAGE_SCALE;
@@ -340,6 +339,8 @@ void CHL2MP_Player::Spawn(void)
 	{
 		RemoveFlag( FL_FROZEN );
 	}
+
+	SetSuitUpdate(NULL, false, 0); // stop ALL hev stuff
 
 	m_iSpawnInterpCounter = (m_iSpawnInterpCounter + 1) % 8;
 
