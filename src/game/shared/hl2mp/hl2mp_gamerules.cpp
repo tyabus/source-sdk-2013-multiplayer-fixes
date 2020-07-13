@@ -992,10 +992,9 @@ CAmmoDef *GetAmmoDef()
 
 
 	ConCommand cc_Bot( "bot", Bot_f, "Add a bot.", FCVAR_CHEAT );
-#endif
 
 	bool CHL2MPRules::FShouldSwitchWeapon( CBasePlayer *pPlayer, CBaseCombatWeapon *pWeapon )
-	{		
+	{
 		if ( pPlayer->GetActiveWeapon() && pPlayer->IsNetClient() )
 		{
 			// Player has an active item, so let's check cl_autowepswitch.
@@ -1008,6 +1007,7 @@ CAmmoDef *GetAmmoDef()
 
 		return BaseClass::FShouldSwitchWeapon( pPlayer, pWeapon );
 	}
+#endif
 
 #ifndef CLIENT_DLL
 

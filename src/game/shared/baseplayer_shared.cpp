@@ -534,8 +534,10 @@ void CBasePlayer::UpdateStepSound( surfacedata_t *psurface, const Vector &vecOri
 	if ( GetMoveType() == MOVETYPE_NOCLIP || GetMoveType() == MOVETYPE_OBSERVER )
 		return;
 
+	#ifndef CLIENT_DLL
 	if ( !footsteps.GetBool() )
 		return;
+	#endif
 
 	if ( sv_footsteps.GetBool() )
 		sv_footsteps.SetValue( 0 );
@@ -671,8 +673,10 @@ void CBasePlayer::UpdateStepSound( surfacedata_t *psurface, const Vector &vecOri
 //-----------------------------------------------------------------------------
 void CBasePlayer::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force )
 {
+#if !defined( CLIENT_DLL )
 	if ( !footsteps.GetBool() )
 		return;
+#endif
 
 #if defined( CLIENT_DLL )
 	// during prediction play footstep sounds only once
