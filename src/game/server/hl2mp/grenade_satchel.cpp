@@ -169,6 +169,7 @@ void CSatchelCharge::SatchelThink( void )
 	StudioFrameAdvance( );
 	SetNextThink( gpGlobals->curtime + 0.1f );
 
+	// Do i still in world?
 	if (!IsInWorld())
 	{
 		UTIL_Remove( this );
@@ -176,7 +177,7 @@ void CSatchelCharge::SatchelThink( void )
 	}
 
 	// Do i still have owner?
-        if (GetOwnerEntity())
+        if (!GetOwnerEntity())
         {
                 UTIL_Remove( this );
                 return;
