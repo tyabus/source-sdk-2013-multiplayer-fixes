@@ -469,16 +469,17 @@ CBaseEntity* CItem::Respawn( void )
 	SetSolid( SOLID_BBOX );
 	AddSolidFlags( FSOLID_TRIGGER );
 
+	RemoveAllDecals(); //remove any decals
+
 	UTIL_SetOrigin( this, g_pGameRules->VecItemRespawnSpot( this ) );// blip to whereever you should respawn.
-	SetAbsAngles( g_pGameRules->VecItemRespawnAngles( this ) );// set the angles.
+        SetAbsAngles( g_pGameRules->VecItemRespawnAngles( this ) );// set the angles.
 
 #if !defined( TF_DLL )
 	UTIL_DropToFloor( this, MASK_SOLID );
 #endif
 
-	RemoveAllDecals(); //remove any decals
-
 	SetThink ( &CItem::Materialize );
+
 	SetNextThink( gpGlobals->curtime + g_pGameRules->FlItemRespawnTime( this ) );
 	return this;
 }

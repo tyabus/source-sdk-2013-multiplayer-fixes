@@ -1781,11 +1781,6 @@ void CWeaponRPG::ItemPostFrame(void)
 	//Move the laser
 	UpdateLaserPosition();
 
-	if (pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0 && m_hMissile == NULL)
-	{
-		StopGuiding();
-	}
-
 	if (pPlayer->m_afButtonPressed & IN_ATTACK2)
 	{
 		ToggleGuiding();
@@ -1968,7 +1963,6 @@ void CWeaponRPG::Drop(const Vector &vecVelocity)
 //-----------------------------------------------------------------------------
 void CWeaponRPG::UpdateLaserPosition(Vector vecMuzzlePos, Vector vecEndPos)
 {
-
 #ifndef CLIENT_DLL
 	if (vecMuzzlePos == vec3_origin || vecEndPos == vec3_origin)
 	{
@@ -2029,7 +2023,7 @@ void CWeaponRPG::CreateLaserPointer(void)
 	if (pOwner == NULL)
 		return;
 
-	if (pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
+	if ( pOwner->GetAmmoCount(m_iPrimaryAmmoType) == 0 && m_hMissile == NULL )
 		return;
 
 	m_hLaserDot = CLaserDot::Create(GetAbsOrigin(), GetOwner());
@@ -2211,7 +2205,7 @@ void CWeaponRPG::InitBeam(void)
 	if (pOwner == NULL)
 		return;
 
-	if (pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
+	if (pOwner->GetAmmoCount(m_iPrimaryAmmoType) == 0 && m_hMissile == NULL)
 		return;
 
 

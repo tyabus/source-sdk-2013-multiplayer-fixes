@@ -920,11 +920,8 @@ CON_COMMAND( fov, "Change players FOV" )
 //------------------------------------------------------------------------------
 void CC_Player_SetModel( const CCommand &args )
 {
-	if ( gpGlobals->deathmatch )
-		return;
-
 	CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
-	if ( pPlayer && args.ArgC() == 2)
+	if ( sv_cheats->GetBool() && pPlayer && args.ArgC() == 2)
 	{
 		static char szName[256];
 		Q_snprintf( szName, sizeof( szName ), "models/%s.mdl", args[1] );
@@ -1026,9 +1023,6 @@ void CC_Player_PhysSwap( void )
 
 		if ( pWeapon )
 		{
-			// Tell the client to stop selecting weapons
-			engine->ClientCommand( UTIL_GetCommandClient()->edict(), "cancelselect" );
-
 			const char *strWeaponName = pWeapon->GetName();
 
 			if ( !Q_stricmp( strWeaponName, "weapon_physcannon" ) )
@@ -1205,18 +1199,8 @@ void CC_God_f (void)
 	if ( !pPlayer )
 		return;
 
-#ifdef TF_DLL
-   if ( TFGameRules() && ( TFGameRules()->IsPVEModeActive() == false ) )
-   {
-	   if ( gpGlobals->deathmatch )
-		   return;
-   }
-#else
-	if ( gpGlobals->deathmatch )
-		return;
-#endif
-
 	pPlayer->ToggleFlag( FL_GODMODE );
+
 	if (!(pPlayer->GetFlags() & FL_GODMODE ) )
 		ClientPrint( pPlayer, HUD_PRINTCONSOLE, "godmode OFF\n");
 	else
@@ -1377,14 +1361,12 @@ void CC_Notarget_f (void)
 	if ( !sv_cheats->GetBool() )
 		return;
 
-	CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() ); 
+	CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() );
 	if ( !pPlayer )
 		return;
 
-	if ( gpGlobals->deathmatch )
-		return;
-
 	pPlayer->ToggleFlag( FL_NOTARGET );
+
 	if ( !(pPlayer->GetFlags() & FL_NOTARGET ) )
 		ClientPrint( pPlayer, HUD_PRINTCONSOLE, "notarget OFF\n");
 	else
