@@ -853,10 +853,17 @@ void CPlayerPickupController::Use( CBaseEntity *pActivator, CBaseEntity *pCaller
 			Shutdown();
 			return;
 		}
-		
+
 		//Adrian: Oops, our object became motion disabled, let go!
 		IPhysicsObject *pPhys = pAttached->VPhysicsGetObject();
-		if ( pPhys && pPhys->IsMoveable() == false )
+
+		if ( !pPhys )
+		{
+			Shutdown();
+			return;
+		}
+
+		if ( pPhys && !pPhys->IsMoveable() )
 		{
 			Shutdown();
 			return;
@@ -874,6 +881,7 @@ void CPlayerPickupController::Use( CBaseEntity *pActivator, CBaseEntity *pCaller
 		// +ATTACK will throw phys objects
 		if ( pPhys && m_pPlayer->m_nButtons & IN_ATTACK ) // Fucking NULL Pointer
 		{
+			IPredictionSystem::SuppressHostEvents( NULL ); // fuck you, prediction
 			Shutdown( true );
 			Vector vecLaunch;
 			m_pPlayer->EyeVectors( &vecLaunch );
