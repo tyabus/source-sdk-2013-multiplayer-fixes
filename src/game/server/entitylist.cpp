@@ -492,7 +492,7 @@ CBaseEntity *CGlobalEntityList::FindEntityByClassname( CBaseEntity *pStartEntity
 			continue;
 		}
 
-		if ( pEntity->ClassMatches(szName) )
+		if ( pEntity && pEntity->ClassMatches(szName) )
 			return pEntity;
 	}
 
