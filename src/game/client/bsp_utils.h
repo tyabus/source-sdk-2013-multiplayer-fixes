@@ -5,7 +5,7 @@
 // $NoKeywords: $
 //===========================================================================//
 
-#include "../utils/common/bsplib.h"
+#include "../common/bsplib.h"
 #include "ibsppack.h"
 
 // Loads bsppack module (IBSPPack) and calls RepackBSP()

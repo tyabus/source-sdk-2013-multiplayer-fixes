@@ -218,15 +218,15 @@
     <ClInclude Include="snappy-stubs-internal.h">
       <Filter>Header Files\Internal Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\utils\lzma\C\7zTypes.h">
+    <ClInclude Include="..\common\lzma\C\7zTypes.h">
       <Filter>LZMA Decompression Support</Filter>
     </ClInclude>
-    <ClInclude Include="..\utils\lzma\C\LzmaDec.h">
+    <ClInclude Include="..\common\lzma\C\LzmaDec.h">
       <Filter>LZMA Decompression Support</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\utils\lzma\C\LzmaDec.c">
+    <ClCompile Include="..\common\lzma\C\LzmaDec.c">
       <Filter>LZMA Decompression Support</Filter>
     </ClCompile>
     <ClCompile Include="bitbuf.cpp">
