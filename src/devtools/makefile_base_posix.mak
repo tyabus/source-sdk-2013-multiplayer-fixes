@@ -292,34 +292,10 @@ else
 		$(CXX) $(CXXFLAGS) $(GENDEP_CXXFLAGS) -o $@ -c $<
 endif
 
-ifneq "$(origin VALVE_NO_AUTO_P4)" "undefined"
-	P4_EDIT_START = chmod -R +w
-	P4_EDIT_END = || true
-	P4_REVERT_START = true
-	P4_REVERT_END =
-else
-	ifndef P4_EDIT_CHANGELIST
-		# You can use an environment variable to specify what changelist to check the Linux Binaries out into. Normally the default
-		# setting is best, but here is an alternate example:
-		# export P4_EDIT_CHANGELIST_CMD="echo 1424335"
-		# ?= means that if P4_EDIT_CHANGELIST_CMD is already set it won't be changed.
-		P4_EDIT_CHANGELIST_CMD ?= $(P4BIN) changes -c `$(P4BIN) client -o | grep ^Client | cut -f 2` -s pending | fgrep 'POSIX Auto Checkout' | cut -d' ' -f 2 | tail -n 1
-		P4_EDIT_CHANGELIST := $(shell $(P4_EDIT_CHANGELIST_CMD))
-	endif
-	ifeq ($(P4_EDIT_CHANGELIST),)
-		# If we haven't found a changelist to check out to then create one. The name must match the one from a few
-		# lines above or else a new changelist will be created each time.
-		# Warning: the behavior of 'echo' is not consistent. In bash you need the "-e" option in order for \n to be
-		# interpreted as a line-feed, but in dash you do not, and if "-e" is passed along then it is printed, which
-		# confuses p4. So, if you run this command from the bash shell don't forget to add "-e" to the echo command.
-		P4_EDIT_CHANGELIST = $(shell echo -e "Change: new\nDescription: POSIX Auto Checkout" | $(P4BIN) change -i | cut -f 2 -d ' ')
-	endif
-
-	P4_EDIT_START := for f in
-	P4_EDIT_END := ; do if [ -n $$f ]; then if [ -d $$f ]; then find $$f -type f -print | $(P4BIN) -x - edit -c $(P4_EDIT_CHANGELIST); else $(P4BIN) edit -c $(P4_EDIT_CHANGELIST) $$f; fi; fi; done $(QUIET_ECHO_POSTFIX)
-	P4_REVERT_START := for f in  
-	P4_REVERT_END := ; do if [ -n $$f ]; then if [ -d $$f ]; then find $$f -type f -print | $(P4BIN) -x - revert; else $(P4BIN) revert $$f; fi; fi; done $(QUIET_ECHO_POSTFIX) 
-endif
+P4_EDIT_START = chmod -R +w
+P4_EDIT_END = || true
+P4_REVERT_START = true
+P4_REVERT_END =
 
 ifeq ($(CONFTYPE),dll)
 all: $(OTHER_DEPENDENCIES) $(OBJS) $(GAMEOUTPUTFILE)
