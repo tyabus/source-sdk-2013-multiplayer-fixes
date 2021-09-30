@@ -929,7 +929,7 @@ void CC_Player_SetModel( const CCommand &args )
 
 		if( i == -1 )
 		{
-			Warning( "Model %s does not exist.\n", szModelName );
+			Warning( "Model %s does not exist.\n", szName );
 			return;
 		}
 
