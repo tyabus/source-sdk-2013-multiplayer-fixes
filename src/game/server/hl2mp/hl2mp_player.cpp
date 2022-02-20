@@ -954,6 +954,11 @@ void CHL2MP_Player::ChangeTeam( int iTeam )
 			FlashlightTurnOff();
 		}
 
+		if ( IsInAVehicle() )
+		{
+			LeaveVehicle();
+		}
+
 		State_Transition( STATE_OBSERVER_MODE );
 	}
 
