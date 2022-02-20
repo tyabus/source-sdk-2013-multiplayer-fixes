@@ -1248,10 +1248,7 @@ $Project
 		$Lib		vgui_controls
 		$Lib		vtf
 		$ImpLib		steam_api
-		
-		$Libexternal $LIBCOMMON/libcrypto [$OSXALL]
-		$Libexternal "$SRCDIR\lib\common\$(CRYPTOPPDIR)\libcrypto" [$LINUXALL]
-
+	
 		$ImpLib	"$LIBCOMMON\curl"	  [$OSXALL]
 
 		$Lib	"$LIBCOMMON\libcurl" [$WIN32]
@@ -1260,7 +1257,7 @@ $Project
 		$Libexternal	libz [$LINUXALL]
 		$Libexternal "$LIBCOMMON/libcurl" [$LINUXALL]
 		$Libexternal "$LIBCOMMON/libcurlssl" [$LINUXALL]
-		$Libexternal "$SRCDIR\lib\common\$(CRYPTOPPDIR)\libssl" [$LINUXALL]
+		$Libexternal "$SRCDIR\lib\common\linux32\libssl" [$LINUXALL]
  	}
 
 }

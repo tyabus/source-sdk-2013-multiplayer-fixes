@@ -15,6 +15,7 @@
 
 OS := $(shell uname)
 HOSTNAME := $(shell hostname)
+CFG ?= release
 
 -include $(SRCROOT)/devtools/steam_def.mak
 -include $(SRCROOT)/devtools/sourcesdk_def.mak
