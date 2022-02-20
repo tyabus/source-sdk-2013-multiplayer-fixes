@@ -187,12 +187,13 @@ else
 	LDFLAGS += -m32
 endif
 
-GEN_SYM ?= $(SRCROOT)/devtools/gendbg.sh
 ifeq ($(CFG),release)
+	GEN_SYM ?= $(SRCROOT)/dev/tools/gendbg.sh
 	STRIP ?= strip $(STRIP_FLAGS) -S
 #	CFLAGS += -ffunction-sections -fdata-sections
 #	LDFLAGS += -Wl,--gc-sections -Wl,--print-gc-sections
 else
+	GEN_SYM ?= true
 	STRIP ?= true
 endif
 
