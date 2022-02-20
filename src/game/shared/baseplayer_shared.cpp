@@ -535,12 +535,9 @@ void CBasePlayer::UpdateStepSound( surfacedata_t *psurface, const Vector &vecOri
 		return;
 
 	#ifndef CLIENT_DLL
-	if ( !footsteps.GetBool() )
+	if ( !sv_footsteps.GetBool() )
 		return;
 	#endif
-
-	if ( sv_footsteps.GetBool() )
-		sv_footsteps.SetValue( 0 );
 
 	speed = VectorLength( vecVelocity );
 	float groundspeed = Vector2DLength( vecVelocity.AsVector2D() );
@@ -674,7 +671,7 @@ void CBasePlayer::UpdateStepSound( surfacedata_t *psurface, const Vector &vecOri
 void CBasePlayer::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, float fvol, bool force )
 {
 #if !defined( CLIENT_DLL )
-	if ( !footsteps.GetBool() )
+	if ( !sv_footsteps.GetBool() )
 		return;
 #endif
 
@@ -723,15 +720,6 @@ void CBasePlayer::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, flo
 
 	CRecipientFilter filter;
 	filter.AddRecipientsByPAS( vecOrigin );
-
-#ifndef CLIENT_DLL
-	// in MP, server removes all players in the vecOrigin's PVS, these players generate the footsteps client side
-	if ( gpGlobals->maxClients > 1 )
-	{
-		//filter.RemoveRecipientsByPVS( vecOrigin );
-	}
-#endif
-
 	EmitSound_t ep;
 	ep.m_nChannel = CHAN_BODY;
 	ep.m_pSoundName = params.soundname;

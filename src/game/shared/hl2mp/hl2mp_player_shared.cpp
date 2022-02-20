@@ -18,8 +18,6 @@
 #include "engine/IEngineSound.h"
 #include "SoundEmitterSystem/isoundemittersystembase.h"
 
-ConVar sv_footsteps( "sv_footsteps", "1", FCVAR_REPLICATED, "Left for compability, unused; Use mp_footsteps instead" );
-
 const char *g_ppszPlayerSoundPrefixNames[PLAYER_SOUNDS_MAX] =
 {
 	"NPC_Citizen",
@@ -30,11 +28,6 @@ const char *g_ppszPlayerSoundPrefixNames[PLAYER_SOUNDS_MAX] =
 const char *CHL2MP_Player::GetPlayerModelSoundPrefix( void )
 {
 	return g_ppszPlayerSoundPrefixNames[m_iPlayerSoundType];
-}
-
-void CHL2MP_Player::PrecacheFootStepSounds( void )
-{
-	sv_footsteps.SetValue( 0 );
 }
 
 //-----------------------------------------------------------------------------

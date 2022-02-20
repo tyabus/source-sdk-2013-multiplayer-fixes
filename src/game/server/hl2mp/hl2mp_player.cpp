@@ -152,8 +152,6 @@ void CHL2MP_Player::Precache( void )
 	for ( i = 0; i < nHeads; ++i )
 	   	 PrecacheModel( g_ppszRandomCombineModels[i] );
 
-	PrecacheFootStepSounds();
-
 	PrecacheScriptSound( "NPC_MetroPolice.Die" );
 	PrecacheScriptSound( "NPC_CombineS.Die" );
 	PrecacheScriptSound( "NPC_Citizen.die" );

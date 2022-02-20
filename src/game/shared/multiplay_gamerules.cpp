@@ -144,6 +144,8 @@ int CMultiplayRules::m_nMapCycleindex = 0;
 CUtlVector<char*> CMultiplayRules::m_MapList;
 #endif
 
+extern ConVar sv_footsteps;
+
 //=========================================================
 //=========================================================
 bool CMultiplayRules::IsMultiplayer( void )
@@ -1096,7 +1098,7 @@ ConVarRef suitcharger( "sk_suitcharger" );
 
 	bool CMultiplayRules::PlayFootstepSounds( CBasePlayer *pl )
 	{
-		if ( !footsteps.GetBool() )
+		if ( !sv_footsteps.GetBool() )
 			return false;
 
 		if ( pl->IsOnLadder() || pl->GetAbsVelocity().Length2D() > 220 )
