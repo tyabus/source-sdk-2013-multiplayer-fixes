@@ -56,11 +56,12 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+extern ConVar sv_footsteps;
+
 #if defined(GAME_DLL) && !defined(_XBOX)
 	extern ConVar sv_pushaway_max_force;
 	extern ConVar sv_pushaway_force;
 	extern ConVar sv_turbophysics;
-	extern ConVar sv_footsteps;
 
 	class CUsePushFilter : public CTraceFilterEntitiesOnly
 	{
@@ -534,10 +535,8 @@ void CBasePlayer::UpdateStepSound( surfacedata_t *psurface, const Vector &vecOri
 	if ( GetMoveType() == MOVETYPE_NOCLIP || GetMoveType() == MOVETYPE_OBSERVER )
 		return;
 
-	#ifndef CLIENT_DLL
 	if ( !sv_footsteps.GetBool() )
 		return;
-	#endif
 
 	speed = VectorLength( vecVelocity );
 	float groundspeed = Vector2DLength( vecVelocity.AsVector2D() );
