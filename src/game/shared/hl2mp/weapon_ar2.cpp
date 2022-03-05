@@ -226,7 +226,7 @@ void CWeaponAR2::DelayedAttack( void )
 	// Register a muzzleflash for the AI
 	pOwner->DoMuzzleFlash();
 	pOwner->SetMuzzleFlashTime(gpGlobals->curtime + 0.5);
-#endif CLIENT_DLL
+#endif
 	
 	WeaponSound( WPN_DOUBLE );
 
