@@ -528,7 +528,7 @@ void IN_Impulse( const CCommand &args )
 void IN_ScoreDown( const CCommand &args )
 {
 	KeyDown( &in_score, args[1] );
-	if ( gViewPortInterface )
+	if ( gViewPortInterface && engine->IsConnected() )
 	{
 		gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, true );
 	}
@@ -537,7 +537,7 @@ void IN_ScoreDown( const CCommand &args )
 void IN_ScoreUp( const CCommand &args )
 {
 	KeyUp( &in_score, args[1] );
-	if ( gViewPortInterface )
+	if ( gViewPortInterface && engine->IsConnected() )
 	{
 		gViewPortInterface->ShowPanel( PANEL_SCOREBOARD, false );
 		GetClientVoiceMgr()->StopSquelchMode();
