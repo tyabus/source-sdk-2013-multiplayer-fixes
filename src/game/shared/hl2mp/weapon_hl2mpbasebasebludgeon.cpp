@@ -132,9 +132,9 @@ void CBaseHL2MPBludgeonWeapon::SecondaryAttack()
 void CBaseHL2MPBludgeonWeapon::Hit( trace_t &traceHit, Activity nHitActivity )
 {
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-	
-	//Do view kick
-//	AddViewKick();
+
+	// Do view kick
+	AddViewKick();
 
 	CBaseEntity	*pHitEntity = traceHit.m_pEnt;
 
