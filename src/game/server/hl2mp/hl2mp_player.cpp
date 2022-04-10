@@ -945,6 +945,7 @@ void CHL2MP_Player::ChangeTeam( int iTeam )
 		SetPlayerModel();
 	}
 
+	DetonateTripmines();
 	ClearUseEntity();
 
 	if ( iTeam == TEAM_SPECTATOR )
