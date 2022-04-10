@@ -82,7 +82,7 @@ public:
 //=============================================================================
 #if defined ( HL2MP )
 class CHL2_Player : public CBaseMultiplayerPlayer
-#endif
+#else
 class CHL2_Player : public CBasePlayer
 #endif
 {
