@@ -46,6 +46,13 @@
 			game+mod			hl2mp/custom/*
 			game+mod			hl2/custom/*
 			
+			game+mod+mod_write+default_write_path |gameinfo_path|.
+			gamebin				|gameinfo_path|bin
+			
+			game+mod			|all_source_engine_paths|hl2mp
+			game+mod			hl2mp/hl2mp_pak.vpk
+			Game				|gameinfo_path|.
+
 			game				|all_source_engine_paths|hl2/hl2_english.vpk
 			game				|all_source_engine_paths|hl2/hl2_pak.vpk
 			game				|all_source_engine_paths|hl2/hl2_textures.vpk
@@ -53,15 +60,6 @@
 			game				|all_source_engine_paths|hl2/hl2_sound_misc.vpk
 			game				|all_source_engine_paths|hl2/hl2_misc.vpk
 			platform			|all_source_engine_paths|platform/platform_misc.vpk
-			
-			game+mod+mod_write+default_write_path		|gameinfo_path|.
-			gamebin				|gameinfo_path|bin
-			
-			game+game_write		hl2mp
-			gamebin				hl2mp/bin
-			game+mod			|all_source_engine_paths|hl2mp
-			game+mod			hl2mp/hl2mp_pak.vpk
-			Game				|gameinfo_path|.
 
 			game				|all_source_engine_paths|hl2mp
 			game				|all_source_engine_paths|hl2
