@@ -70,9 +70,9 @@ void FinishClientPutInServer( CHL2MP_Player *pPlayer )
 	pPlayer->ShowViewPortPanel( PANEL_INFO, true, data );
 
 	if ( HL2MPRules()->IsTeamplay() == true )
-        {
+	{
                 ClientPrint( pPlayer, HUD_PRINTTALK, "You are on team %s1\n", pPlayer->GetTeam()->GetName() );
-        }
+	}
 
 	data->deleteThis();
 }

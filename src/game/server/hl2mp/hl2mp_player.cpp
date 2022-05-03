@@ -917,6 +917,7 @@ bool CHL2MP_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 void CHL2MP_Player::ChangeTeam( int iTeam )
 {
 	bool bKill = false;
+	bool bWasSpectator = false;
 
 	if ( HL2MPRules()->IsTeamplay() != true && iTeam != TEAM_SPECTATOR )
 	{
@@ -932,6 +933,11 @@ void CHL2MP_Player::ChangeTeam( int iTeam )
 		}
 	}
 
+	if (this->GetTeamNumber() == TEAM_SPECTATOR)
+	{
+		bWasSpectator = true;
+	}
+
 	BaseClass::ChangeTeam( iTeam );
 
 	m_flNextTeamChangeTime = gpGlobals->curtime + TEAM_CHANGE_INTERVAL;
@@ -943,6 +949,12 @@ void CHL2MP_Player::ChangeTeam( int iTeam )
 	else
 	{
 		SetPlayerModel();
+	}
+
+	if ( bWasSpectator )
+	{
+		Spawn();
+		return; // everything is useless afterwards
 	}
 
 	DetonateTripmines();
@@ -981,7 +993,7 @@ bool CHL2MP_Player::HandleCommand_JoinTeam( int team )
 		return true;
 	}
 
-	if( GetNextTeamChangeTime() >= gpGlobals->curtime )
+	if( GetNextTeamChangeTime() > gpGlobals->curtime )
 	{
                 char szReturnString[128];
                 Q_snprintf( szReturnString, sizeof( szReturnString ), "Please wait %d more seconds before trying to switch teams again.\n", (int)(GetNextTeamChangeTime() - gpGlobals->curtime) );
@@ -997,6 +1009,19 @@ bool CHL2MP_Player::HandleCommand_JoinTeam( int team )
 		return false;
 	}
 
+	// Don't do anything if you join your own team
+	if (team == GetTeamNumber())
+	{
+		return false;
+	}
+	
+	// end early
+	if (this->GetTeamNumber() == TEAM_SPECTATOR)
+	{
+		ChangeTeam(team);
+		return true;
+	}
+
 	if ( team == TEAM_SPECTATOR )
 	{
 		// Prevent this is the cvar is set
@@ -1006,7 +1031,7 @@ bool CHL2MP_Player::HandleCommand_JoinTeam( int team )
 			return false;
 		}
 
-		if ( GetTeamNumber() != TEAM_UNASSIGNED && !IsDead() )
+		if (GetTeamNumber() != TEAM_UNASSIGNED && !IsDead())
 		{
 			m_fNextSuicideTime = gpGlobals->curtime;	// allow the suicide to work
 
