@@ -303,6 +303,15 @@ void CPropVehicle::RemovePhysicsChild( CBaseEntity *pChild )
 }
 
 #endif //HL2_EPISODIC
+
+//-----------------------------------------------------------------------------
+// Purpose: Suppression of prop variable
+//-----------------------------------------------------------------------------
+void SendProxy_SuppressedVarZero(const SendProp *pProp, const void *pStructBase, const void *pData, DVariant *pOut, int iElement, int objectID)
+{
+	pOut->m_Int = 0;
+}
+
 //=============================================================================
 
 //-----------------------------------------------------------------------------
@@ -320,8 +329,8 @@ IMPLEMENT_SERVERCLASS_ST(CPropVehicleDriveable, DT_PropVehicleDriveable)
 	SendPropInt(SENDINFO(m_nHasBoost), 1, SPROP_UNSIGNED),
 	SendPropInt(SENDINFO(m_nScannerDisabledWeapons), 1, SPROP_UNSIGNED),
 	SendPropInt(SENDINFO(m_nScannerDisabledVehicle), 1, SPROP_UNSIGNED),
-	SendPropInt(SENDINFO(m_bEnterAnimOn), 1, SPROP_UNSIGNED ),
-	SendPropInt(SENDINFO(m_bExitAnimOn), 1, SPROP_UNSIGNED ),
+	SendPropBoolEx(SENDINFO(m_bEnterAnimOn), SendProxy_SuppressedVarZero),
+	SendPropBoolEx(SENDINFO(m_bExitAnimOn), SendProxy_SuppressedVarZero),
 	SendPropInt(SENDINFO(m_bUnableToFire), 1, SPROP_UNSIGNED ),
 	SendPropVector(SENDINFO(m_vecEyeExitEndpoint), -1, SPROP_COORD),
 	SendPropBool(SENDINFO(m_bHasGun)),

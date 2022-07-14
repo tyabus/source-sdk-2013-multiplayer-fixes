@@ -24,6 +24,12 @@ SendProp SendPropBool(
 	int offset,
 	int sizeofVar );
 
+SendProp SendPropBoolEx(
+	const char *pVarName,
+	int offset,
+	int sizeofVar,
+	SendVarProxyFn proxyFn = SendProxy_EHandleToInt );
+
 SendProp SendPropEHandle(
 	const char *pVarName,
 	int offset,

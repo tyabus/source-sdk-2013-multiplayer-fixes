@@ -59,6 +59,15 @@ SendProp SendPropBool(
 	return SendPropInt( pVarName, offset, sizeofVar, 1, SPROP_UNSIGNED );
 }
 
+SendProp SendPropBoolEx(
+	const char *pVarName,
+	int offset,
+	int sizeofVar,
+	SendVarProxyFn proxyFn )
+{
+	Assert( sizeofVar == sizeof( bool ) );
+	return SendPropInt( pVarName, offset, sizeofVar, 1, SPROP_UNSIGNED, proxyFn );
+}
 
 SendProp SendPropEHandle(
 	const char *pVarName,
