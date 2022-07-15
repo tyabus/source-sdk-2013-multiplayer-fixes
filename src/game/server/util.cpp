@@ -29,6 +29,7 @@
 #include "utldict.h"
 #include "collisionutils.h"
 #include "movevars_shared.h"
+#include "inetchannel.h"
 #include "inetchannelinfo.h"
 #include "tier0/vprof.h"
 #include "ndebugoverlay.h"
@@ -1304,6 +1305,23 @@ void UTIL_SetTrace(trace_t& trace, const Ray_t &ray, edict_t *ent, float fractio
 	trace.hitgroup = hitgroup;
 	trace.surface =	g_NullSurface;
 	trace.contents = contents;
+}
+
+void UTIL_SetClientConVarValue(edict_t *pEdict, const char *pszConVarName, const char *pszConVarValue)
+{
+	char data[256];
+	bf_write buffer(data, sizeof(data));
+
+	buffer.WriteUBitLong(5, 6);  // msg num, NET_MESSAGE_BITS
+	buffer.WriteByte(1);
+	buffer.WriteString(pszConVarName);
+	buffer.WriteString(pszConVarValue);
+
+	INetChannel *pnetchan = (INetChannel*)engine->GetPlayerNetInfo(pEdict->m_EdictIndex);
+	//INetChannelInfo *pnetchan = engine->GetPlayerNetInfo(pEdict->m_EdictIndex);
+
+	if (pnetchan)
+		pnetchan->SendData(buffer);
 }
 
 void UTIL_ClearTrace( trace_t &trace )

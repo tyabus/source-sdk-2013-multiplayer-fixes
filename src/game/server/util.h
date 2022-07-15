@@ -206,6 +206,7 @@ const char *nexttoken(char *token, const char *str, char sep);
 void		UTIL_SetSize			(CBaseEntity *pEnt, const Vector &vecMin, const Vector &vecMax);
 void		UTIL_ClearTrace			( trace_t &trace );
 void		UTIL_SetTrace			(trace_t& tr, const Ray_t &ray, edict_t* edict, float fraction, int hitgroup, unsigned int contents, const Vector& normal, float intercept );
+void 		UTIL_SetClientConVarValue(edict_t *pEdict, const char *pszConVarName, const char *pszConVarValue);
 
 int			UTIL_PrecacheDecal		( const char *name, bool preload = false );
 

@@ -597,6 +597,8 @@ void CPropVehicleDriveable::EnterVehicle( CBaseCombatCharacter *pPassenger )
 			ExitVehicle( VEHICLE_ROLE_DRIVER );
 		}
 
+		UTIL_SetClientConVarValue( pPlayer->edict(), "sv_client_predict", "0" );
+
 		m_hPlayer = pPlayer;
 		m_playerOn.FireOutput( pPlayer, this, 0 );
 
@@ -630,8 +632,16 @@ void CPropVehicleDriveable::EnterVehicle( CBaseCombatCharacter *pPassenger )
 void CPropVehicleDriveable::ExitVehicle( int nRole )
 {
 	CBasePlayer *pPlayer = m_hPlayer;
+	ConVar *pPredictEnforcement = cvar->FindVar( "sv_client_predict" );
+
 	if ( !pPlayer )
 		return;
+
+	if(pPredictEnforcement)
+		UTIL_SetClientConVarValue(pPlayer->edict(), "sv_client_predict", pPredictEnforcement->GetString() );
+	else // failsafe
+		UTIL_SetClientConVarValue(pPlayer->edict(), "sv_client_predict", "-1" );
+
 
 	m_hPlayer = NULL;
 	ResetUseKey( pPlayer );
